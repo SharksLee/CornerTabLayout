@@ -6,6 +6,5 @@
         <attr name="text_size" format="reference|dimension"/>
         <attr name="text_bg_selected_color" format="reference"/>
         <attr name="text_bg_normal_color" format="reference"/>
-        <attr name="xlTab_width" format="reference|dimension"/>
     </declare-styleable>
 </resources>

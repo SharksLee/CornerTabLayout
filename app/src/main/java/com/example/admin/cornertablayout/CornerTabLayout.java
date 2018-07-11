@@ -32,7 +32,6 @@ public class CornerTabLayout extends LinearLayout {
     private GradientDrawable mIndicatorDrawable = (GradientDrawable) getResources().getDrawable(R.drawable.bg_corners_029b7a);
     private int mViewWidth;
     private int mDrawableId;
-    private int mIndicatorDrawableWidth = 0;
 
     /**
      * tab选项卡的宽度
@@ -92,7 +91,6 @@ public class CornerTabLayout extends LinearLayout {
         mTextSize = (int) attrArray.getDimension(R.styleable.CornerTabLayout_text_size, DisplayUtil.sp2px(14));
         mBgNormalColor = attrArray.getDrawable(R.styleable.CornerTabLayout_text_bg_normal_color);
         mBgSelectedColor = attrArray.getDrawable(R.styleable.CornerTabLayout_text_bg_selected_color);
-        mTabWidth = (int) attrArray.getDimension(R.styleable.CornerTabLayout_xlTab_width, -1);
         attrArray.recycle();
 
         mPaint = new Paint();
@@ -175,7 +173,7 @@ public class CornerTabLayout extends LinearLayout {
         removeAllViews();
 
         if (mTabWidth <= 0) {
-            mTabWidth = getMeasuredWidth()/ tabs.size();
+            mTabWidth = getMeasuredWidth() / tabs.size();
         }
 
         LayoutParams lp = new LayoutParams(mTabWidth, LayoutParams.MATCH_PARENT);
@@ -267,7 +265,6 @@ public class CornerTabLayout extends LinearLayout {
     public void initIndicatorDrawable() {
         if (mDrawableId > 0) {
             mIndicatorDrawable = (GradientDrawable) getResources().getDrawable(mDrawableId);
-            mIndicatorDrawable.setBounds(0, 0, mIndicatorDrawableWidth, getHeight() - getPaddingBottom() - getPaddingTop());
         }
     }
 
@@ -332,7 +329,7 @@ public class CornerTabLayout extends LinearLayout {
     protected void drawIndicatorVerticalPos(Canvas canvas) {
         if (mIndicatorDrawable != null) {
             canvas.save();
-            canvas.translate(mIndicatorTravelOffset, getPaddingTop());
+            canvas.translate(mIndicatorTravelOffset, 0);
             mIndicatorDrawable.draw(canvas);
             canvas.restore();
         }
@@ -342,14 +339,10 @@ public class CornerTabLayout extends LinearLayout {
     public void scroll(int position, float offset) {
         if (getChildCount() == 0) return;
         View selectView = getChildAt(position);
-        View nextView = getChildAt(position + 1);
         int width = selectView.getMeasuredWidth();
         if (width == 0) return;
-        int nextWidth = nextView == null ? 0 : nextView.getWidth();
-        mIndicatorDrawableWidth = (int) ((nextWidth - width) * offset) + width;
-
-        if (mIndicatorDrawable != null)
-            mIndicatorDrawable.setBounds(0, 0, mIndicatorDrawableWidth, getHeight() - getPaddingBottom() - getPaddingTop());
+        if (mIndicatorDrawable != null && mIndicatorDrawable.getIntrinsicWidth() == 0){}
+            mIndicatorDrawable.setBounds(0, getPaddingTop(), width, getHeight() - getPaddingBottom());
 
         mIndicatorTravelOffset = (int) (selectView.getX() + width * offset);
         invalidate();
