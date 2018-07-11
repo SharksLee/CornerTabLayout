@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="XLTabLayoutV2">
+    <declare-styleable name="CornerTabLayout">
         <attr name="text_normal_color" format="reference|color"/>
         <attr name="text_selected_color" format="reference|color"/>
-        <attr name="tab_indicator_color" format="reference|color"/>
         <attr name="text_size" format="reference|dimension"/>
         <attr name="text_bg_selected_color" format="reference"/>
         <attr name="text_bg_normal_color" format="reference"/>
-
-        <attr name="tab_horizontal_margin" format="reference|dimension"/>
-        <attr name="tab_indicator_height" format="reference|dimension"/>
-        <attr name="tab_item_click_effect" format="boolean"/>
-
-        <!--same_weight使用，指定平分的数量-->
-        <attr name="tab_indicator_visible_count" format="integer"/>
-
-        <!--wrap_content使用，指定tab左边、右边的padding-->
-        <attr name="tab_item_horizontal_padding" format="dimension|reference"/>
-
-        <attr name="tab_item_mode" format="enum">
-            <enum name="same_weight" value="0"/>
-            <enum name="wrap_content" value="1"/>
-        </attr>
-
         <attr name="xlTab_width" format="reference|dimension"/>
-        <attr name="tab_horizontal_padding" format="reference|dimension"/>
-        <attr name="xlTab_badge_size" format="dimension|reference"/>
-        <attr name="xlTab_badge_bg" format="reference|color"/>
-        <!--第一次绑定tab后，当view宽度没测量出来时指定默认的width-->
-        <attr name="xlTab_default_total_width" format="dimension|reference"/>
     </declare-styleable>
 </resources>

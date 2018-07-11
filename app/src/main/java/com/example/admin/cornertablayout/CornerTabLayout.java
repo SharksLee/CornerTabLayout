@@ -13,9 +13,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -74,8 +72,6 @@ public class CornerTabLayout extends LinearLayout {
      * 文本的尺寸
      */
     private int mTextSize;
-    private float mLastClickX;
-    private float mLastClickY;
     private TabOnClickListener mTabClickListener;
 
     public CornerTabLayout(Context context) {
@@ -90,13 +86,13 @@ public class CornerTabLayout extends LinearLayout {
     private void initView(Context context, AttributeSet attrs) {
 
         setOrientation(HORIZONTAL);
-        TypedArray attrArray = context.obtainStyledAttributes(attrs, R.styleable.XLTabLayoutV2);
-        mNormalColor = attrArray.getColor(R.styleable.XLTabLayoutV2_text_normal_color, getResources().getColor(R.color.gray_darkest));
-        mSelectedColor = attrArray.getColor(R.styleable.XLTabLayoutV2_text_selected_color, getResources().getColor(R.color.orange));
-        mTextSize = (int) attrArray.getDimension(R.styleable.XLTabLayoutV2_text_size, DisplayUtil.sp2px(14));
-        mBgNormalColor = attrArray.getDrawable(R.styleable.XLTabLayoutV2_text_bg_normal_color);
-        mBgSelectedColor = attrArray.getDrawable(R.styleable.XLTabLayoutV2_text_bg_selected_color);
-        mTabWidth = (int) attrArray.getDimension(R.styleable.XLTabLayoutV2_xlTab_width, -1);
+        TypedArray attrArray = context.obtainStyledAttributes(attrs, R.styleable.CornerTabLayout);
+        mNormalColor = attrArray.getColor(R.styleable.CornerTabLayout_text_normal_color, getResources().getColor(R.color.gray_darkest));
+        mSelectedColor = attrArray.getColor(R.styleable.CornerTabLayout_text_selected_color, getResources().getColor(R.color.orange));
+        mTextSize = (int) attrArray.getDimension(R.styleable.CornerTabLayout_text_size, DisplayUtil.sp2px(14));
+        mBgNormalColor = attrArray.getDrawable(R.styleable.CornerTabLayout_text_bg_normal_color);
+        mBgSelectedColor = attrArray.getDrawable(R.styleable.CornerTabLayout_text_bg_selected_color);
+        mTabWidth = (int) attrArray.getDimension(R.styleable.CornerTabLayout_xlTab_width, -1);
         attrArray.recycle();
 
         mPaint = new Paint();
@@ -179,7 +175,7 @@ public class CornerTabLayout extends LinearLayout {
         removeAllViews();
 
         if (mTabWidth <= 0) {
-            mTabWidth = DisplayUtil.getScreenWidth() / tabs.size();
+            mTabWidth = getMeasuredWidth()/ tabs.size();
         }
 
         LayoutParams lp = new LayoutParams(mTabWidth, LayoutParams.MATCH_PARENT);
@@ -357,15 +353,6 @@ public class CornerTabLayout extends LinearLayout {
 
         mIndicatorTravelOffset = (int) (selectView.getX() + width * offset);
         invalidate();
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_UP) {
-            mLastClickX = ev.getX();
-            mLastClickY = ev.getY();
-        }
-        return super.dispatchTouchEvent(ev);
     }
 
     public void setTabClickListener(TabOnClickListener tabClickListener) {
